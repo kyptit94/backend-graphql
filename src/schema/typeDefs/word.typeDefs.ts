@@ -6,7 +6,7 @@ const WordType = `
     type Post {
       word: String
       define: String
-      id: Int
+      id: String
     }
   `;
 

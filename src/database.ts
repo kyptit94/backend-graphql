@@ -1,12 +1,11 @@
-import {MongoClient} from "mongodb";
+import mongoose from "mongoose";
 
-const uri = process.env.mongo_uri || "mongodb://localhost:27017"; // Adjust the database name accordingly
-const client = new MongoClient(uri);
+const uri = process.env.mongo_uri || "mongodb://localhost:27017/blog"; // Adjust the database name accordingly
 
 export async function connect() {
   try {
-    await client.connect();
-    return client.db("pwa_blog"); // Adjust the database name accordingly
+    await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true } as mongoose.ConnectOptions);
+    return mongoose.connection;
   } catch (error) {
     console.error("Could not connect to MongoDB", error);
     process.exit(1);
