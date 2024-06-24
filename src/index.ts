@@ -1,17 +1,17 @@
 import Fastify, { FastifyInstance } from 'fastify';
 import mercurius from 'mercurius';
 import { connect } from './database';
-import PostType from './schema/typeDefs/post.typeDefs';
-import PostResolvers from './schema/resolvers/post.resolver';
+import { createSchema } from './schema';
 
 const app: FastifyInstance = Fastify();
 
-connect().then(() => {
+connect().then(async (db) => {
   console.log("Connected to MongoDB");
-  
+
+  const schema = createSchema();
+
   app.register(mercurius, {
-    resolvers: PostResolvers,
-    schema: PostType,
+    schema,
     graphiql: true
   });
 
